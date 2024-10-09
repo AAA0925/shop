@@ -1,6 +1,5 @@
 package com.example.shopping.controller;
 
-import java.io.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,19 +8,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.example.shopping.dao.ProductDAO;
 
-@WebServlet("/purchase")
-public class PurchaseController extends HttpServlet {
+import java.io.IOException;
+
+@WebServlet("/admin/update-product-status")
+public class UpdateProductStatusController extends HttpServlet {
     private ProductDAO productDAO = new ProductDAO();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         long productId = Long.parseLong(request.getParameter("productId"));
-        String userName = request.getParameter("userName");
-        String userContact = request.getParameter("userContact");
+        String newStatus = request.getParameter("status");
 
-        // 记录买家的意向
-        productDAO.recordBuyerIntent(productId, userName, userContact); // 假设你在 ProductDAO 中有这个方法
+        productDAO.updateProductStatus(productId, newStatus); // 更新商品状态
 
-        response.sendRedirect("success.jsp"); // 重定向到成功页面
+        response.sendRedirect("admin.jsp"); // 重定向回商家后台
     }
 }
+
