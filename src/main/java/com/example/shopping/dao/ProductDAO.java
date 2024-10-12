@@ -57,7 +57,7 @@ public class ProductDAO {
             pstmt.setLong(2, productId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); 
         }
     }
 
@@ -91,32 +91,38 @@ public class ProductDAO {
         return products;
     }
 
-    public void recordBuyerIntent(long productId, String userName, String userContact) {
-        String sql = "INSERT INTO BuyerIntent (productId, userName, userContact) VALUES (?, ?, ?)";
+    public Product getProductById(long id) {
+        Product product = null;
+        String sql = "SELECT * FROM Products WHERE id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setLong(1, productId);
-            pstmt.setString(2, userName);
-            pstmt.setString(3, userContact);
+            pstmt.setLong(1, id);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    product = new Product(
+                        rs.getLong("id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getString("image"),
+                        rs.getDouble("price"),
+                        rs.getString("status")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return product;
+    }
+    public void clearAllProducts() {
+        String sql = "DELETE FROM Products";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public List<BuyerIntent> getBuyerIntents() {
-        List<BuyerIntent> intents = new ArrayList<>();
-        String sql = "SELECT * FROM BuyerIntent";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
-            while (rs.next()) {
-                intents.add(new BuyerIntent(rs.getLong("id"), rs.getLong("productId"),
-                        rs.getString("userName"), rs.getString("userContact")));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return intents;
-    }
+
 }

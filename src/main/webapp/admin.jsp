@@ -3,6 +3,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.shopping.dao.ProductDAO" %>
 <%@ page import="com.example.shopping.model.Product" %>
+<%@ page import="com.example.shopping.model.BuyerIntent" %>
+<%@ page import="com.example.shopping.dao.BuyerIntentDAO" %>
+
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -30,9 +33,20 @@
             <td><%= product.getPrice() %></td>
             <td><%= product.getStatus() %></td>
             <td>
-                <form action="freezeProduct" method="post">
+                <form action="manage-product" method="post">
                     <input type="hidden" name="productId" value="<%= product.getId() %>">
-                    <button type="submit">冻结商品</button>
+                    <%
+                        if ("available".equals(product.getStatus())) {
+                    %>
+                    <button type="submit" name="action" value="freeze">冻结商品</button>
+                    <%
+                        } else if ("frozen".equals(product.getStatus())) {
+                    %>
+                    <button type="submit" name="action" value="unlist">下架商品</button>
+                    <button type="submit" name="action" value="restore">恢复商品</button>
+                    <%
+                        }
+                    %>
                 </form>
             </td>
         </tr>
@@ -42,16 +56,53 @@
     </table>
 
     <h2>发布商品</h2>
-    <form action="admin/add-product" method="post">
+    <form action="add-product" method="post">
         <input type="text" name="name" placeholder="商品名称" required>
         <input type="text" name="description" placeholder="商品描述" required>
         <input type="text" name="image" placeholder="商品图片URL" required>
         <input type="number" name="price" placeholder="商品价格" required>
         <button type="submit">发布商品</button>
     </form>
-
+	
+	<h2>查看意向购买人</h2>
+    <table border="1">
+        <tr>
+            <th>商品ID</th>
+            <th>商品名称</th>
+            <th>买家姓名</th>
+            <th>联系方式</th>
+        </tr>
+        <%
+            BuyerIntentDAO buyerIntentDAO = new BuyerIntentDAO();
+            List<BuyerIntent> buyerIntents = buyerIntentDAO.getBuyerIntentsExcludingSoldProducts();
+            for (BuyerIntent intent : buyerIntents) {
+                Product product = productDAO.getProductById(intent.getProductId()); // 获取对应商品的信息
+        %>
+        <tr>
+            <td><%= intent.getProductId() %></td>
+            <td><%= product != null ? product.getName() : "商品已下架" %></td>
+            <td><%= intent.getUserName() %></td>
+            <td><%= intent.getUserContact() %></td>
+        </tr>
+        <%
+            }
+        %>
+    </table>
+	
     <h2>历史商品</h2>
     <a href="history.jsp">查看历史商品</a>
     <a href="index.jsp">返回首页</a>
+    
+    <h2>修改密码</h2>
+	<form action="change-password" method="post">
+	    <input type="password" name="oldPassword" placeholder="当前密码" required>
+	    <input type="password" name="newPassword" placeholder="新密码" required>
+	    <button type="submit">修改密码</button>
+	</form>
+	<form action="reset-system" method="post">
+    	<button type="submit">重置系统</button>
+	</form>
+	
+    
 </body>
 </html>

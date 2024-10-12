@@ -1,21 +1,50 @@
 package com.example.shopping.model;
 
 public class BuyerIntent {
-    private long id;
-    private long productId;
+    private int id;
+    private int productId;
     private String userName;
     private String userContact;
 
-    public BuyerIntent(long id, long productId, String userName, String userContact) {
+    public BuyerIntent(int id, int productId, String userName, String userContact) {
         this.id = id;
         this.productId = productId;
         this.userName = userName;
         this.userContact = userContact;
     }
+    public BuyerIntent() {
+    	
+    }
 
-    // Getters 和 Setters
-    public long getId() { return id; }
-    public long getProductId() { return productId; }
-    public String getUserName() { return userName; }
-    public String getUserContact() { return userContact; }
+    public int getId() {
+        return id;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getUserContact() {
+        return userContact;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setUserContact(String userContact) {
+        this.userContact = userContact;
+    }
 }
