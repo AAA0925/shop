@@ -28,6 +28,7 @@
             <p>价格：¥<%= product.getPrice() %></p>
             <p>状态：<%= product.getStatus() %></p>
             <img src="<%= product.getImage() %>" alt="<%= product.getName() %>" style="width: 150px; height: auto;">
+
         </div>
 
         <div class="purchase-form">

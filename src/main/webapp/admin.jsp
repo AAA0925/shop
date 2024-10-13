@@ -56,13 +56,7 @@
     </table>
 
     <h2>发布商品</h2>
-    <form action="add-product" method="post">
-        <input type="text" name="name" placeholder="商品名称" required>
-        <input type="text" name="description" placeholder="商品描述" required>
-        <input type="text" name="image" placeholder="商品图片URL" required>
-        <input type="number" name="price" placeholder="商品价格" required>
-        <button type="submit">发布商品</button>
-    </form>
+	<a href="addproduct.jsp">发布商品</a>
 	
 	<h2>查看意向购买人</h2>
     <table border="1">
