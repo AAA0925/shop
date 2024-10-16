@@ -15,6 +15,7 @@ import com.example.shopping.model.BuyerIntent;
 public class BuyerIntentController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         String productIdStr = request.getParameter("productId");
         String userName = request.getParameter("userName");
         String userContact = request.getParameter("userContact");

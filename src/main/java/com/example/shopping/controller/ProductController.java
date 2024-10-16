@@ -17,6 +17,7 @@ public class ProductController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         List<Product> products = productDAO.getAllProducts();
         request.setAttribute("products", products);
         request.getRequestDispatcher("/WEB-INF/products.jsp").forward(request, response);
@@ -24,6 +25,7 @@ public class ProductController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         String name = request.getParameter("name");
         String description = request.getParameter("description");
         String image = request.getParameter("image");

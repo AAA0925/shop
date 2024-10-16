@@ -15,6 +15,7 @@ import com.example.shopping.dao.SellerDAO;
 public class ResetSystemController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         SellerDAO sellerDAO = new SellerDAO();
         ProductDAO productDAO = new ProductDAO();
         BuyerIntentDAO buyerIntentDAO = new BuyerIntentDAO();

@@ -15,9 +15,10 @@ public class ManageProductController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         String productIdStr = request.getParameter("productId");
         String action = request.getParameter("action");
-        
+
         if (productIdStr != null && action != null) {
             long productId = Long.parseLong(productIdStr);
             ProductDAO productDAO = new ProductDAO();

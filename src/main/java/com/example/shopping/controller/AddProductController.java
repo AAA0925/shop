@@ -24,6 +24,7 @@ public class AddProductController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         // 获取表单数据
         String name = request.getParameter("name");
         String description = request.getParameter("description");
